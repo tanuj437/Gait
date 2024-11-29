@@ -49,21 +49,11 @@
             border-radius: 10px;
             border: 3px solid #1f80e1;
             overflow: hidden;
-            position: relative;
         }
-        #live-video {
+        iframe {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .prediction {
-            font-size: 1.5em;
-            color: #76ff03;
-            font-weight: bold;
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            height: 500px;
+            border: none;
         }
     </style>
 </head>
@@ -73,8 +63,8 @@
         <p>Select an option:</p>
 
         <h2>1. Live Feed</h2>
-        <button onclick="startLiveFeed()">Start Live Feed</button>
-        <button onclick="stopLiveFeed()" style="display:none;">Stop Live Feed</button>
+        <button id="start-live-feed" onclick="startLiveFeed()">Start Live Feed</button>
+        <button id="stop-live-feed" onclick="stopLiveFeed()" style="display:none;">Stop Live Feed</button>
 
         <h2>2. Upload a Video</h2>
         <form action="/upload" method="post" enctype="multipart/form-data">
@@ -82,37 +72,29 @@
             <button type="submit">Upload Video</button>
         </form>
 
-        <div id="video-feed">
-            <img src="" id="live-video" alt="Live Feed" style="display:none;">
-            <div id="prediction" class="prediction" style="display:none;"></div>
+        <div id="video-feed" style="display:none;">
+            <iframe id="live-video" src="" allowfullscreen></iframe>
         </div>
     </div>
 
     <script>
-        let liveFeedStarted = false;
+        const liveFeedButton = document.getElementById('start-live-feed');
+        const stopFeedButton = document.getElementById('stop-live-feed');
+        const videoFeed = document.getElementById('video-feed');
         const liveVideo = document.getElementById('live-video');
-        const predictionText = document.getElementById('prediction');
 
         function startLiveFeed() {
-            liveFeedStarted = true;
-            liveVideo.style.display = 'block';
-            liveVideo.src = "/videofeed/live";
-            document.querySelector('button:nth-of-type(1)').style.display = 'none';
-            document.querySelector('button:nth-of-type(2)').style.display = 'inline-block';
+            videoFeed.style.display = 'block';
+            liveVideo.src = "/videofeed/live"; // Set the source to the live feed route
+            liveFeedButton.style.display = 'none';
+            stopFeedButton.style.display = 'inline-block';
         }
 
         function stopLiveFeed() {
-            liveFeedStarted = false;
-            liveVideo.style.display = 'none';
-            predictionText.style.display = 'none';
-            document.querySelector('button:nth-of-type(1)').style.display = 'inline-block';
-            document.querySelector('button:nth-of-type(2)').style.display = 'none';
-        }
-
-        // Display predictions on live video stream
-        function updatePrediction(prediction) {
-            predictionText.style.display = 'block';
-            predictionText.innerHTML = prediction;
+            liveVideo.src = ""; // Stop the live video feed
+            videoFeed.style.display = 'none';
+            liveFeedButton.style.display = 'inline-block';
+            stopFeedButton.style.display = 'none';
         }
     </script>
 </body>

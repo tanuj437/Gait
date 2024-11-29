@@ -1,4 +1,4 @@
 0 Navya
-1 Tanuj
-2 Ujjwal
+1 Ujjwal
+2 Tanuj
 3 Soumya
