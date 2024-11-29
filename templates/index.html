@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gait Analysis</title>
+</head>
+<body>
+    <h1>Gait Analysis System</h1>
+    <p>Select an option:</p>
+
+    <h2>1. Live Feed</h2>
+    <a href="/videofeed/live" target="_blank">Start Live Feed</a>
+
+    <h2>2. Upload a Video</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="video" accept="video/*" required>
+        <button type="submit">Upload Video</button>
+    </form>
+</body>
+</html>
