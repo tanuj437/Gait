@@ -41,11 +41,18 @@ def generate_frames(source="live"):
     camera = cv2.VideoCapture(0)
     cap = camera if source == "live" else cv2.VideoCapture(video_stream)
 
+    # Resize dimensions for the live feed to fit into the frame
+    frame_width = 800
+    frame_height = 500
+
     while cap.isOpened():
         success, frame = cap.read()
         if not success:
             print("Error: Unable to read from camera")
             break
+
+        # Resize the frame to match the HTML dimensions
+        frame = cv2.resize(frame, (frame_width, frame_height), interpolation=cv2.INTER_AREA)
 
         prediction_text = process_frame(frame)
         cv2.putText(frame, prediction_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
